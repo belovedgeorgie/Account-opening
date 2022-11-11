@@ -1,5 +1,5 @@
 import http from "http";
-import https from "https";
+//import https from "https";
 import bodyParser from "body-parser";
 import express from "express";
 import logging from "./config/logging";
@@ -80,13 +80,7 @@ router.use((req, res, next) => {
   });
 });
 
-const httpServer = https.createServer(
-  {
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem"),
-  },
-  router
-);
+const httpServer = http.createServer(router);
 
 httpServer.listen(config.server.port, () =>
   logging.info(
