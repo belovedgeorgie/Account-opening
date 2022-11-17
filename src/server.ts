@@ -6,8 +6,6 @@ import logging from "./config/logging";
 import config from "./config/config";
 import gtRoutes from "./routes/gtroutes";
 import mongoose from "mongoose";
-import cors from "cors";
-const fs = require("fs");
 
 const NAMESPACE = "Server";
 const router = express();

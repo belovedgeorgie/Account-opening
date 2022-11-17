@@ -3,14 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const https_1 = __importDefault(require("https"));
+const http_1 = __importDefault(require("http"));
+//import https from "https";
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_1 = __importDefault(require("express"));
 const logging_1 = __importDefault(require("./config/logging"));
 const config_1 = __importDefault(require("./config/config"));
 const gtroutes_1 = __importDefault(require("./routes/gtroutes"));
 const mongoose_1 = __importDefault(require("mongoose"));
-const fs = require("fs");
 const NAMESPACE = "Server";
 const router = (0, express_1.default)();
 /* router.use(
@@ -60,8 +60,5 @@ router.use((req, res, next) => {
         message: error.message,
     });
 });
-const httpServer = https_1.default.createServer({
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem"),
-}, router);
+const httpServer = http_1.default.createServer(router);
 httpServer.listen(config_1.default.server.port, () => logging_1.default.info(NAMESPACE, `Server is running ${config_1.default.server.hostname}:${config_1.default.server.port}`));
