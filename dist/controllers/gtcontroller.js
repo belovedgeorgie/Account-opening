@@ -56,4 +56,31 @@ const getAllGtAccounts = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         });
     });
 });
-exports.default = { getAllGtAccounts, createRecord, serverHealthCheck };
+const getAccountCreated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.query;
+    console.log(id);
+    const filter = { agentCode: "" };
+    if (id) {
+        filter.agentCode = id.toString();
+    }
+    yield gtModel_1.default.find(filter)
+        .exec()
+        .then((details) => {
+        return res.status(200).json({
+            records: details,
+            count: details.length,
+        });
+    })
+        .catch((error) => {
+        return res.status(500).json({
+            message: error.message,
+            error,
+        });
+    });
+});
+exports.default = {
+    getAllGtAccounts,
+    createRecord,
+    serverHealthCheck,
+    getAccountCreated,
+};

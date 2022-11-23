@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import filterInterface from "../interfaces/filterInterface";
 import Record from "../models/gtModel";
 
 const serverHealthCheck = (req: Request, res: Response, next: NextFunction) => {
@@ -57,4 +58,36 @@ const getAllGtAccounts = async (
     });
 };
 
-export default { getAllGtAccounts, createRecord, serverHealthCheck };
+const getAccountCreated = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id } = req.query;
+  console.log(id);
+  const filter: filterInterface = { agentCode: "" };
+  if (id) {
+    filter.agentCode = id.toString();
+  }
+  await Record.find(filter)
+    .exec()
+    .then((details) => {
+      return res.status(200).json({
+        records: details,
+        count: details.length,
+      });
+    })
+    .catch((error) => {
+      return res.status(500).json({
+        message: error.message,
+        error,
+      });
+    });
+};
+
+export default {
+  getAllGtAccounts,
+  createRecord,
+  serverHealthCheck,
+  getAccountCreated,
+};

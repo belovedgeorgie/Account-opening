@@ -8,4 +8,5 @@ const router = express_1.default.Router();
 router.get("/", gtcontroller_1.default.serverHealthCheck);
 router.post("/create-record", gtcontroller_1.default.createRecord);
 router.get("/get-records", gtcontroller_1.default.getAllGtAccounts);
+router.get("/get-single-record", gtcontroller_1.default.getAccountCreated);
 module.exports = router;
